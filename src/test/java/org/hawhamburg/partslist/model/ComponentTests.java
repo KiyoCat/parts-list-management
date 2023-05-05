@@ -17,7 +17,13 @@ public class ComponentTests {
      */
     @Test
     public void fetchPriceMaterial() {
-        // TODO
+        // Arrange
+        var material1 = new Material("m1", 20);
+        int expectedResult = 20;
+        // Act
+        int actualResult = material1.fetchTotalPrice();
+        // Assert
+        assertEquals(expectedResult, actualResult);
     }
 
     /**
@@ -25,7 +31,17 @@ public class ComponentTests {
      */
     @Test
     public void fetchPriceProductWithTwoMaterials() throws CyclicStructureException {
-        // TODO
+        // Arrange
+        var material1 = new Material("m1", 23);
+        var material2 = new Material("m2", 6);
+        var product1 = new Product("p1",37);
+        product1.addPart(material1,1);
+        product1.addPart(material2,1);
+        int expectedResult = 23+6+37;
+        // Act
+        int actualResult = product1.fetchTotalPrice();
+        // Assert
+        assertEquals(expectedResult,actualResult);
     }
 
     /**
@@ -33,7 +49,19 @@ public class ComponentTests {
      */
     @Test
     public void fetchPriceProductWithMultipleSubProducts() throws CyclicStructureException {
-        // TODO
+        // Arrange
+        var material1 = new Material("m1", 23);
+        var material2 = new Material("m2", 6);
+        var product1 = new Product("p1",37);
+        var product2 = new Product("p2", 72);
+        product1.addPart(material1,1);
+        product2.addPart(material2,3);
+        product2.addPart(product1,2);
+        int expectedResult = (2*23)+(3*6)+(2*37)+72;
+        // Act
+        int actualResult = product2.fetchTotalPrice();
+        // Assert
+        assertEquals(expectedResult,actualResult);
     }
 
     @Test
